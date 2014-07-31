@@ -1,0 +1,51 @@
+<!--
+Load the web component libraries
+-->
+<link href="./cube-element-import.html" rel="import">
+
+<link href="../polymer/polymer.html" rel="import">
+<link href="../paper-shadow/paper-shadow.html" rel="import">
+
+<!--
+Main element code
+-->
+<polymer-element
+    name="cube-element">
+    <template>
+        <link rel="stylesheet" type="text/css" href="./styles/cube.css">
+        <link rel="stylesheet" type="text/css" href="./styles/base.css">
+
+        <div id="cubeContainer">
+        </div>
+    
+    </template>
+    <script>
+        Polymer('cube-element', {
+            ready: function(){
+
+                var useLockedControls = true,
+                    controls = useLockedControls ? ERNO.Locked : ERNO.Freeform;
+                var ua = navigator.userAgent,
+                    isIe = ua.indexOf('MSIE') > -1 || ua.indexOf('Trident/') > -1;
+
+                var cube = new ERNO.Cube({
+                    hideInvisibleFaces: true,
+                    controls: controls,
+                    renderer: isIe ? ERNO.renderers.IeCSS3D : null
+                });
+
+                this.$.cubeContainer.appendChild( cube.domElement );
+
+                if( controls === ERNO.Locked ){
+                    var fixedOrientation = new THREE.Euler(  Math.PI * 0.1, Math.PI * -0.25, 0 );
+                    cube.object3D.lookAt( cube.camera.position );
+                    cube.rotation.x += fixedOrientation.x;
+                    cube.rotation.y += fixedOrientation.y;
+                    cube.rotation.z += fixedOrientation.z;
+                }
+
+            }
+        });
+    
+    </script>
+</polymer-element>
