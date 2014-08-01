@@ -3,9 +3,6 @@ Load the web component libraries
 -->
 <link href="./cube-element-import.html" rel="import">
 
-<link href="../polymer/polymer.html" rel="import">
-<link href="../paper-button/paper-button.html" rel="import">
-<link href="../font-roboto/roboto.html" rel="import">
 
 <!--
 Main element code
@@ -28,19 +25,20 @@ Main element code
                 width: auto;
             }
 
-            #reset-button {
+            #resetButton {
                 background: #4285f4;
                 color: #fff;
             }
-            #reset-button:hover {
+            #resetButton:hover {
                 background: #2a56c6;
             }
         </style>
 
         <div id="cubeContainer">
         </div>
-        <paper-button id="reset-button" label="Reset" raisedButton></paper-button>
-        <paper-button id="play-button" label="Play" raisedButton></paper-button>
+
+        <paper-button id="resetButton" label="Reset" raisedButton></paper-button>
+        <paper-button id="playButton" label="Play" raisedButton></paper-button>
         
     
     </template>
@@ -52,12 +50,13 @@ Main element code
 
             // callback
             ready: function(){
+                var _this = this;
 
-                var useLockedControls = true,
+                var useLockedControls = false,
                     controls = useLockedControls ? ERNO.Locked : ERNO.Freeform;
 
                 var cube = new ERNO.Cube({
-                    hideInvisibleFaces: false,
+                    hideInvisibleFaces: true,
                     controls: controls,
                 });
 
@@ -70,10 +69,19 @@ Main element code
                     cube.rotation.y += fixedOrientation.y;
                     cube.rotation.z += fixedOrientation.z;
                 }
+
+                // action on play button
+                this.$.playButton.onclick = function () {
+                    cube.twist(_this.demo);
+                } 
+
+                // action on reset button
+                this.$.resetButton.onclick = function () {
+                    cube.solve();
+                }
                 
                 // calculate the algo to revert cube
                 var reverseTwist = this.demo.reverse().invert();
-
 
                 // TODO: facelets
 
