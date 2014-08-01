@@ -18,7 +18,7 @@ You can get a cute cube by **cube-element** tag
 * specify initial state
 * ...more
 
-# Arthor
+# Author
 
 * Colin Su
 
