@@ -9,15 +9,16 @@ Load the web component libraries
 Main element code
 -->
 <polymer-element
-    name="cube-element">
+    name="cube-element"
+    attributes="height width initmove initrevmove demo">
     <template>
         <link rel="stylesheet" type="text/css" href="./styles/cube.css">
         <link rel="stylesheet" type="text/css" href="./styles/base.css">
 
         <style>
             #cubeContainer {
-                height: {{ containerHeight }};
-                width: {{ containerWidth }};
+                height: {{ height }};
+                width:  {{ width }};
             }
         </style>
 
@@ -28,8 +29,8 @@ Main element code
     <script>
         Polymer('cube-element', {
             // parameters
-            containerHeight: "300px",
-            containerWidth: "300px",
+            height: "300px",
+            width:  "300px",
 
             // callback
             ready: function(){
@@ -40,7 +41,7 @@ Main element code
                     isIe = ua.indexOf('MSIE') > -1 || ua.indexOf('Trident/') > -1;
 
                 var cube = new ERNO.Cube({
-                    hideInvisibleFaces: true,
+                    hideInvisibleFaces: false,
                     controls: controls,
                     renderer: isIe ? ERNO.renderers.IeCSS3D : null
                 });
@@ -54,6 +55,25 @@ Main element code
                     cube.rotation.y += fixedOrientation.y;
                     cube.rotation.z += fixedOrientation.z;
                 }
+                
+                // calculate the algo to revert cube
+                var reverseTwist = this.demo.reverse().invert();
+
+
+                // TODO: facelets
+
+                // TODO: initrevmove, initmove
+                for ( var i = 0 ; i < reverseTwist.length ; i++ ) {
+                    var step = reverseTwist[i]
+                    var stepTwist = new ERNO.Twist(step);
+
+                    cube.immediateTwist(stepTwist);
+                }
+
+                // demo
+
+                var _this = this;
+                setTimout(1000, function () {cube.twist(_this.demo);});
 
             }
         });

@@ -1,6 +1,13 @@
 {
     "name": "cube-element",
-    "private": true,
+    "version": "0.0.1",
+    "authors": [
+        "Colin Su <littleq0903@gmail.com>"
+    ],
+    "description": "Element providing Rubik's Cube visualization",
+    "keywords": "polymer, web-components",
+    "main": "cube-element.html",
+    "homepage": "https://github.com/littleq0903/cube-element",
     "dependencies": {
         "polymer": "Polymer/polymer#master"
     }
