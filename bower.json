@@ -10,5 +10,8 @@
     "homepage": "https://github.com/littleq0903/cube-element",
     "dependencies": {
         "polymer": "Polymer/polymer#master"
-    }
+    },
+    "ignore": [
+        "**/.*"
+    ]
 }
