@@ -14,12 +14,24 @@ Main element code
         <link rel="stylesheet" type="text/css" href="./styles/cube.css">
         <link rel="stylesheet" type="text/css" href="./styles/base.css">
 
+        <style>
+            #cubeContainer {
+                height: {{ containerHeight }};
+                width: {{ containerWidth }};
+            }
+        </style>
+
         <div id="cubeContainer">
         </div>
     
     </template>
     <script>
         Polymer('cube-element', {
+            // parameters
+            containerHeight: "300px",
+            containerWidth: "300px",
+
+            // callback
             ready: function(){
 
                 var useLockedControls = true,
