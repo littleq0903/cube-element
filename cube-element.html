@@ -59,6 +59,9 @@ Main element code
                     hideInvisibleFaces: true,
                     controls: controls,
                 });
+                
+                // calculate the algo to revert cube
+                var demoTwistString = _this.demo;
 
                 this.$.cubeContainer.appendChild( cube.domElement );
 
@@ -72,26 +75,22 @@ Main element code
 
                 // action on play button
                 this.$.playButton.onclick = function () {
-                    cube.twist(_this.demo);
+                    cube.twist(demoTwistString);
                 } 
 
                 // action on reset button
                 this.$.resetButton.onclick = function () {
                     cube.solve();
                 }
-                
-                // calculate the algo to revert cube
-                var reverseTwist = this.demo.reverse().invert();
 
-                // TODO: facelets
+                // revert
+                for ( var i = demoTwistString.length - 1; i >= 0 ; i-- ) {
+                    var currentTwist = demoTwistString[i];
+                    var invertedTwist = (new ERNO.Twist(currentTwist)).getInverse();
 
-                // TODO: initrevmove, initmove
-                for ( var i = 0 ; i < reverseTwist.length ; i++ ) {
-                    var step = reverseTwist[i]
-                    var stepTwist = new ERNO.Twist(step);
-
-                    cube.immediateTwist(stepTwist);
+                    cube.immediateTwist(invertedTwist);
                 }
+                
 
             }
         });

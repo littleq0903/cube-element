@@ -849,10 +849,19 @@ ERNO.extend( ERNO.Cube.prototype, {
 
 			//	Kick off the next animation frame
 
-			var localTime = ( typeof window !== 'undefined' && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now() );
-			var frameDelta = localTime - ( time || localTime );
-			time = localTime;
+			//var localTime = ( typeof window !== 'undefined' && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now() );
+            var localTime = Date.now();
+            var frameDelta;
 
+
+            // solved the problem when rendering multiple cubes, save the framedelta for further usage. 2014/8/4 LittleQ
+            if ( ! window.defaultFrameDelta ) {
+                window.defaultFrameDelta = localTime - ( time || localTime );
+            }
+
+            frameDelta = window.defaultFrameDelta;
+
+			time = localTime;
 
 			if( !this.paused ){
 
