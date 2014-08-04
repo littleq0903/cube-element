@@ -10,26 +10,29 @@ Main element code
 <polymer-element
     name="cube-element"
     attributes="height width initmove initrevmove demo">
+
     <template>
         <link rel="stylesheet" type="text/css" href="./styles/cube.css">
         <link rel="stylesheet" type="text/css" href="./styles/base.css">
 
         <style shim-shadowdom>
             #cubeContainer {
-                height: {{ height }};
-                width:  {{ width }};
+                background: black;
+                height: {{ height }}px;
+                width:  {{ width }}px;
             }
 
-            paper-button {
+            paper-icon-button {
+                margin-top: -48px;
                 font-family: RobotoDraft;
-                width: auto;
+                text-align: center;
             }
 
-            #resetButton {
+            #playButton {
                 background: #4285f4;
                 color: #fff;
             }
-            #resetButton:hover {
+            #playButton:hover {
                 background: #2a56c6;
             }
         </style>
@@ -37,20 +40,22 @@ Main element code
         <div id="cubeContainer">
         </div>
 
-        <paper-button id="resetButton" label="Reset" raisedButton></paper-button>
-        <paper-button id="playButton" label="Play" raisedButton></paper-button>
-        
+        <paper-icon-button id="playButton"  icon="av:play-arrow" raisedButton fill></paper-icon-button>
+        <paper-icon-button id="resetButton" icon="av:replay"     raisedButton fill></paper-icon-button>
     
     </template>
     <script>
         Polymer('cube-element', {
             // parameters
-            height: "300px",
-            width:  "300px",
+            height: 250,
+            width:  250,
 
             // callback
             ready: function(){
+                
                 var _this = this;
+
+                this.buttonWidth = this.width / 2;
 
                 var useLockedControls = false,
                     controls = useLockedControls ? ERNO.Locked : ERNO.Freeform;
@@ -59,6 +64,8 @@ Main element code
                     hideInvisibleFaces: true,
                     controls: controls,
                 });
+
+                window.cubes.push(cube);
                 
                 // calculate the algo to revert cube
                 var demoTwistString = _this.demo;
@@ -84,13 +91,21 @@ Main element code
                 }
 
                 // revert
+                /*
                 for ( var i = demoTwistString.length - 1; i >= 0 ; i-- ) {
                     var currentTwist = demoTwistString[i];
                     var invertedTwist = (new ERNO.Twist(currentTwist)).getInverse();
 
                     cube.immediateTwist(invertedTwist);
                 }
-                
+                */
+               var revertedTwistString = demoTwistString.invert().reverse();
+
+               var oldTwistDuration = cube.twistDuration;
+               cube.twistDuration = 100;
+               cube.twist(revertedTwistString);
+               setTimeout(function(){ cube.twistDuration = oldTwistDuration; }, cube.twistDuration * revertedTwistString.length * 2);
+               console.log(cube.twistDuration * revertedTwistString.length);
 
             }
         });

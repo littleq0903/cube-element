@@ -10,7 +10,8 @@
   "homepage": "https://github.com/littleq0903/cube-element",
   "dependencies": {
     "polymer": "~0.3.3",
-    "paper-button": "Polymer/paper-button#~0.3.4"
+    "paper-button": "Polymer/paper-button#~0.3.4",
+    "paper-icon-button": "Polymer/paper-icon-button#~0.3.4"
   },
   "ignore": [
     "**/.*"
