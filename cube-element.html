@@ -9,7 +9,7 @@ Main element code
 -->
 <polymer-element
     name="cube-element"
-    attributes="height width initmove initrevmove demo">
+    attributes="cube-height cube-width cube-initmove cube-initrevmove cube-demo">
 
     <template>
         <link rel="stylesheet" type="text/css" href="./styles/cube.css">
@@ -18,8 +18,8 @@ Main element code
         <style shim-shadowdom>
             #cubeContainer {
                 background: black;
-                height: {{ height }}px;
-                width:  {{ width }}px;
+                height: {{ cube-height }}px;
+                width:  {{ cube-width }}px;
             }
 
             paper-icon-button {
@@ -47,15 +47,17 @@ Main element code
     <script>
         Polymer('cube-element', {
             // parameters
-            height: 250,
-            width:  250,
+            "cube-height": 250,
+            "cube-width":  250,
 
             // callback
             ready: function(){
+                // global cubes space initialization
+                if ( 'undefined' === typeof window.cubes ) { window.cubes = []; }
                 
                 var _this = this;
 
-                this.buttonWidth = this.width / 2;
+                this.buttonWidth = _this["cube-width"] / 2;
 
                 var useLockedControls = false,
                     controls = useLockedControls ? ERNO.Locked : ERNO.Freeform;
@@ -68,7 +70,7 @@ Main element code
                 window.cubes.push(cube);
                 
                 // calculate the algo to revert cube
-                var demoTwistString = _this.demo;
+                var demoTwistString = _this['cube-demo'];
 
                 this.$.cubeContainer.appendChild( cube.domElement );
 

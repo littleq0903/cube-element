@@ -1,6 +1,6 @@
 {
   "name": "cube-element",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "authors": [
     "Colin Su <littleq0903@gmail.com>"
   ],
@@ -9,9 +9,8 @@
   "main": "cube-element.html",
   "homepage": "https://github.com/littleq0903/cube-element",
   "dependencies": {
-    "polymer": "~0.3.3",
-    "paper-button": "Polymer/paper-button#~0.3.4",
-    "paper-icon-button": "Polymer/paper-icon-button#~0.3.4"
+    "polymer": "~1.0.0",
+    "paper-icon-button": "Polymer/paper-icon-button#~1.0.0"
   },
   "ignore": [
     "**/.*"
