@@ -749,6 +749,16 @@ ERNO.extend( ERNO.Cube.prototype, {
 
 				}}));
 			}
+            
+
+            // If this is the final twist in the queue we should trigger an event for indicate the current action is over.
+
+            if( this.twistQueue.future.length === 0 ){
+                this.dispatchEvent( new CustomEvent('onFinalTwistComplete', { detail: {
+                    slice : slice,
+                    twist : twist
+                }}));
+            }
 
 
 
