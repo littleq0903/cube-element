@@ -92,20 +92,20 @@ Main element code
 
                 // revert
                 /*
-                for ( var i = demoTwistString.length - 1; i >= 0 ; i-- ) {
-                    var currentTwist = demoTwistString[i];
-                    var invertedTwist = (new ERNO.Twist(currentTwist)).getInverse();
-
-                    cube.immediateTwist(invertedTwist);
-                }
+                   Fast revert twist cubes to initial state and wait for demonstration
                 */
-               var revertedTwistString = demoTwistString.invert().reverse();
+                var revertedTwistString = demoTwistString.invert().reverse();
+                var oldTwistDuration = cube.twistDuration;
+                var firstCompleteEvtListener = function(evt) {
+                    // this event listener should be executed only once, after that should be removed forever.
+                    cube.twistDuration = oldTwistDuration;
+                    this.removeEventListener('onFinalTwistComplete', firstCompleteEvtListener);
+                }
+                cube.twistDuration = 0;
+                cube.twist(revertedTwistString);
+                console.debug(cube);
 
-               var oldTwistDuration = cube.twistDuration;
-               cube.twistDuration = 100;
-               cube.twist(revertedTwistString);
-               setTimeout(function(){ cube.twistDuration = oldTwistDuration; }, cube.twistDuration * revertedTwistString.length * 2);
-
+                cube.addEventListener('onFinalTwistComplete', firstCompleteEvtListener);
             }
         });
     
